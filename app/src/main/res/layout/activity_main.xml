@@ -8,39 +8,45 @@
     tools:context="com.example.android.miwok.MainActivity">
 
     <TextView
+        android:gravity="center"
         android:id="@+id/numbers"
         android:text="@string/category_numbers"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:textSize="40sp"
-        android:background="#fff000"/>
+        android:background="#FDC51C"/>
 
     <TextView
-        android:id="@+id/colors"
-        android:text="@string/category_colors"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:textSize="40sp"
-        android:background="#f231f2"/>
-
-    <TextView
+        android:gravity="center"
         android:id="@+id/family"
         android:text="@string/category_family"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:textSize="40sp"
-        android:background="#6565bf"/>
+        android:background="#0CCC6D"/>
 
     <TextView
+        android:gravity="center"
+        android:id="@+id/colors"
+        android:text="@string/category_colors"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:textSize="40sp"
+        android:background="#D235F1"/>
+
+
+
+    <TextView
+        android:gravity="center"
         android:id="@+id/phrases"
         android:text="@string/category_phrases"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:textSize="40sp"
-        android:background="#6efdfd"/>
+        android:background="#22CECE"/>
 
 </LinearLayout>

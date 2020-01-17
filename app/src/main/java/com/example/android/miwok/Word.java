@@ -1,15 +1,25 @@
 package com.example.android.miwok;
 
-import android.widget.TextView;
+
+import android.media.Image;
+
 
 public class Word {
 
     private String mDefaultTranslation;
     private String mMiwokTranslation;
+    private int mImageResourceId;
+
+    public Word(int imageResourceId, String defaultTranslation,
+                String miwokTranslation) {
+        mImageResourceId = imageResourceId;
+        mDefaultTranslation = defaultTranslation;
+        mMiwokTranslation = miwokTranslation;
+    }
 
     public Word(String defaultTranslation, String miwokTranslation) {
         mDefaultTranslation = defaultTranslation;
-        mMiwokTranslation  = miwokTranslation;
+        mMiwokTranslation = miwokTranslation;
     }
 
     public String getDefaultTranslation() {
@@ -18,5 +28,9 @@ public class Word {
 
     public String getMiwokTranslation() {
         return mMiwokTranslation;
+    }
+
+    public int getImageResourceId() {
+        return mImageResourceId;
     }
 }
