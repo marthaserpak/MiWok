@@ -10,10 +10,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 
 public class WordAdapter extends ArrayAdapter<Word> {
+
+    private int mColorResourceId;
 
     /*
      * This is our own custom constructor (it doesn't mirror a superclass constructor).
@@ -23,8 +26,9 @@ public class WordAdapter extends ArrayAdapter<Word> {
      * @param context The current context. Used to inflate the layout file.
      * @param words   A List of AndroidFlavor objects to display in a list */
 
-    public WordAdapter(Activity context, ArrayList<Word> words) {
+    public WordAdapter(Activity context, ArrayList<Word> words, int colorResourceId) {
         super(context, 0, words);
+        mColorResourceId = colorResourceId;
     }
 
     /*
@@ -57,8 +61,14 @@ public class WordAdapter extends ArrayAdapter<Word> {
         TextView defaultTextView = listItemView.findViewById(R.id.english_text_view);
         defaultTextView.setText(currentWord.getDefaultTranslation());
 
+        View textContainer = listItemView.findViewById(R.id.textContainer);
+        int color = ContextCompat.getColor(getContext(), mColorResourceId);
+        textContainer.setBackgroundColor(color);
+
+
         ImageView iconView = listItemView.findViewById(R.id.image);
         iconView.setImageResource(currentWord.getImageResourceId());
+
 
         /* Return the whole list item layout */
         return listItemView;
