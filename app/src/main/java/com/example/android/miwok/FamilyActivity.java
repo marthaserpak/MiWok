@@ -16,6 +16,16 @@ public class FamilyActivity extends AppCompatActivity {
 
     private MediaPlayer mMediaPlayer;
 
+    /* This listener gets triggered when the mediaplayer
+    has completed playing the audio*/
+    private MediaPlayer.OnCompletionListener mOnCompletionListener =
+            new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    releaseMediaPlayer();
+                }
+            };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +74,7 @@ public class FamilyActivity extends AppCompatActivity {
                 "paapa",
                 R.raw.family_grandfather));
 
-        WordAdapter adapter = new WordAdapter(this, words,R.color.family);
+        WordAdapter adapter = new WordAdapter(this, words, R.color.family);
 
         ListView listView = findViewById(R.id.list);
 
@@ -74,13 +84,32 @@ public class FamilyActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Word word = words.get(position);
-
                 Log.v("NumbersActivity", "Currennt word:" + word);
+
+                /* Release the media player if it currently exists because we are
+                 * about to play different sound file*/
+                releaseMediaPlayer();
+
                 mMediaPlayer = MediaPlayer.create(FamilyActivity.this,
                         word.getAudioResourceId());
+
+                mMediaPlayer.start();
+
+                /* Setup a listener on M.P. ,so that we can stop and release the
+                 * media player once the sound has finished playing*/
+                mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
+
                 Toast.makeText(FamilyActivity.this,
                         "Play", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    /* Clean up media player by releasing its resources*/
+    private void releaseMediaPlayer() {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
     }
 }

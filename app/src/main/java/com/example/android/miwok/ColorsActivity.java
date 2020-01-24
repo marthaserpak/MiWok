@@ -15,6 +15,16 @@ public class ColorsActivity extends AppCompatActivity {
 
     MediaPlayer mMediaPlayer;
 
+    /* This listener gets triggered when the mediaplayer
+    has completed playing the audio*/
+    private MediaPlayer.OnCompletionListener mOnCompletionListener =
+            new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    releaseMediaPlayer();
+                }
+            };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,11 +75,27 @@ public class ColorsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Word word = words.get(position);
+
+                releaseMediaPlayer();
+
                 mMediaPlayer = MediaPlayer.create(ColorsActivity.this,
                         word.getAudioResourceId());
+
+                mMediaPlayer.start();
+
+                mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
+
                 Toast.makeText(ColorsActivity.this,
                         "Play", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void releaseMediaPlayer(){
+        if(mMediaPlayer != null) {
+            mMediaPlayer.release();
+
+            mMediaPlayer = null;
+        }
     }
 }
