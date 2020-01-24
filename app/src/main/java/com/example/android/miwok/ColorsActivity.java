@@ -2,6 +2,7 @@ package com.example.android.miwok;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -11,9 +12,30 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static android.media.AudioManager.AUDIOFOCUS_LOSS_TRANSIENT;
+import static android.media.AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK;
+
 public class ColorsActivity extends AppCompatActivity {
 
     MediaPlayer mMediaPlayer;
+
+    AudioManager mAudioManager;
+
+    AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener =
+            new AudioManager.OnAudioFocusChangeListener() {
+                @Override
+                public void onAudioFocusChange(int focusChange) {
+                    if (focusChange == AUDIOFOCUS_LOSS_TRANSIENT ||
+                            focusChange == AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+                        mMediaPlayer.pause();
+                        mMediaPlayer.seekTo(0);
+                    } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+                        mMediaPlayer.start();
+                    } else if(focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+                        releaseMediaPlayer();
+                    }
+                }
+            };
 
     /* This listener gets triggered when the mediaplayer
     has completed playing the audio*/
@@ -78,24 +100,44 @@ public class ColorsActivity extends AppCompatActivity {
 
                 releaseMediaPlayer();
 
-                mMediaPlayer = MediaPlayer.create(ColorsActivity.this,
-                        word.getAudioResourceId());
+                /* Request audio focus for playback */
+                int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
+                        // Use the music stream.
+                        AudioManager.STREAM_MUSIC,
+                        // Request permanent focus.
+                        AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
-                mMediaPlayer.start();
+                if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
 
-                mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
+                    mMediaPlayer = MediaPlayer.create(ColorsActivity.this,
+                            word.getAudioResourceId());
 
-                Toast.makeText(ColorsActivity.this,
-                        "Play", Toast.LENGTH_SHORT).show();
+                    mMediaPlayer.start();
+
+                    mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
+
+                    Toast.makeText(ColorsActivity.this,
+                            "Play", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
-    private void releaseMediaPlayer(){
-        if(mMediaPlayer != null) {
+    @Override
+    protected void onStop() {
+        super.onStop();
+        /*  When the activity is stopped, release the media player resources
+         * because we won't be playing any more sounds*/
+        releaseMediaPlayer();
+    }
+
+    private void releaseMediaPlayer() {
+        if (mMediaPlayer != null) {
             mMediaPlayer.release();
 
             mMediaPlayer = null;
+
+            mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
         }
     }
 }
