@@ -2,6 +2,7 @@ package com.example.android.miwok;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -31,7 +32,7 @@ public class ColorsActivity extends AppCompatActivity {
                         mMediaPlayer.seekTo(0);
                     } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
                         mMediaPlayer.start();
-                    } else if(focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+                    } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
                         releaseMediaPlayer();
                     }
                 }
@@ -51,6 +52,9 @@ public class ColorsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word_list);
+
+        /*Create and setup the audioManager to request audio focus */
+        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         final ArrayList<Word> words = new ArrayList<>();
 
@@ -102,18 +106,23 @@ public class ColorsActivity extends AppCompatActivity {
 
                 /* Request audio focus for playback */
                 int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
-                        // Use the music stream.
                         AudioManager.STREAM_MUSIC,
-                        // Request permanent focus.
                         AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-
+                    /* We have audio focus now.
+                     *
+                     * Create and setup the MediaPlayer for the audio resource
+                     * associated with the current word */
                     mMediaPlayer = MediaPlayer.create(ColorsActivity.this,
                             word.getAudioResourceId());
 
+                    /* Start the audio file */
                     mMediaPlayer.start();
 
+                    /* Setup the listener on the MediaPlayer, so that we can stop
+                    * and release the media player once the sound has
+                    * finished playing. */
                     mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
 
                     Toast.makeText(ColorsActivity.this,
