@@ -9,33 +9,57 @@
     <ImageView
         android:id="@+id/image"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/textContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/textContainer">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/miwok_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:layout_margin="10dp"
             android:textSize="25sp"
-            android:paddingLeft="15dp"
-            android:paddingBottom="10dp"
-            tools:text="lutti"/>
+            tools:text="lutti" />
 
-        <TextView
-            android:id="@+id/english_text_view"
+        </FrameLayout>
+
+        <!--<ImageView
+            android:layout_width="45dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="220dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/round_play_circle_filled_black_24dp" />-->
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="23sp"
-            android:paddingEnd="12dp"
-            android:paddingLeft="15dp"
-            tools:text="one"
-            android:paddingRight="12dp" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/english_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="20dp"
+                android:layout_margin="10dp"
+                android:textSize="23sp"
+                tools:text="one" />
+
+        </FrameLayout>
+
+
 
     </LinearLayout>
+
+
 
 </LinearLayout>

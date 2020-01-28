@@ -1,50 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/tan_background"
     android:orientation="vertical"
+    android:drawSelectorOnTop="true"
     tools:context="com.example.android.miwok.MainActivity">
 
-    <TextView
-        android:gravity="center"
-        android:id="@+id/numbers"
-        android:text="@string/category_numbers"
+    <!-- Numbers category -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:drawSelectorOnTop="true"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:textSize="40sp"
-        android:background="#FD8E09"/>
+        android:background="@color/category_numbers"
+        android:layout_gravity="clip_vertical">
 
-    <TextView
-        android:gravity="center"
-        android:id="@+id/family"
-        android:text="@string/category_family"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:textSize="40sp"
-        android:background="#379237"/>
+        <TextView
+            android:layout_height="match_parent"
+            android:id="@+id/numbers"
+            style="@style/CategoryStyle"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="@string/category_numbers"
+            android:textSize="30sp" />
+    </FrameLayout>
 
-    <TextView
-        android:gravity="center"
-        android:id="@+id/colors"
-        android:text="@string/category_colors"
+    <!-- Family category -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:textSize="40sp"
-        android:background="#8800A0"/>
+        android:background="@color/category_family">
+        <TextView
+            android:id="@+id/family"
+            android:layout_height="match_parent"
+            style="@style/CategoryStyle"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/category_family"
+            android:gravity="center"
+            android:textSize="30sp"/>
+    </FrameLayout>
 
-    <TextView
-        android:gravity="center"
-        android:id="@+id/phrases"
-        android:text="@string/category_phrases"
+    <!-- Colors category -->
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_gravity="center"
+        android:background="@color/category_colors">
+        <TextView
+            android:id="@+id/colors"
+            android:layout_height="match_parent"
+            style="@style/CategoryStyle"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/category_colors" />
+    </FrameLayout>
+
+    <!-- Phrases category -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:textSize="40sp"
-        android:background="#16AFCA"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:background="@color/category_phrases">
+        <TextView
+            android:id="@+id/phrases"
+            style="@style/CategoryStyle"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/category_phrases" />
+    </FrameLayout>
+
 
 </LinearLayout>
